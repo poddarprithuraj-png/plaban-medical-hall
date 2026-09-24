@@ -5,4 +5,7 @@
 - [x] Provide Netlify configuration and report GitHub publishing status.
 - [x] Add home delivery, diagnostics, prescriptions, and MD/diabetes/urology consultations with phone contact.
 - [x] Replace vintage pharmacy imagery with authentic Indian pharmacy and medicine photography; add animated opening numbers and verify phone/desktop layouts.
+- [ ] Replace the illustrative photos with realistic AI-generated Indian medical hall imagery, without hospital or laboratory scenes.
+- [ ] Build diagnostics booking with test selection, preferred slots, patient details, and an honest confirmation request.
+- [ ] Replace “diabetes specialist” with “endocrinologist” everywhere on the site.
 - [ ] Push to GitHub — blocked: no authorization to the requested account or repository.
