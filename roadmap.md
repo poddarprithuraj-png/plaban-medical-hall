@@ -8,4 +8,5 @@
 - [ ] Replace the illustrative photos with realistic AI-generated Indian medical hall imagery, without hospital or laboratory scenes.
 - [ ] Build diagnostics booking with test selection, preferred slots, patient details, and an honest confirmation request.
 - [ ] Replace “diabetes specialist” with “endocrinologist” everywhere on the site.
+- [ ] Remove the Somani Enterprises storefront photo everywhere and show only the new generated pharmacy imagery.
 - [ ] Push to GitHub — blocked: no authorization to the requested account or repository.
