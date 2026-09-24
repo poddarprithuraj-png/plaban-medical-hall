@@ -17,7 +17,7 @@ const requestSchema = z.object({
   phone: z.string().regex(/^[6-9][0-9]{9}$/, "Enter a valid 10-digit Indian mobile number"),
   age: z.number().int().min(0).max(120).nullable(),
   tests: z.array(z.enum(diagnosticTests)).min(1).max(8),
-  date: z.iso.date(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Choose a valid date"),
   window: z.enum(["Morning", "Afternoon", "Evening"]),
   notes: z.string().trim().max(500),
   website: z.string().max(0),
