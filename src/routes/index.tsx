@@ -4,21 +4,20 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import { Button } from "@/components/ui/button";
 import primaryLogo from "@/assets/plaban-primary-logo.png";
 import iconLogo from "@/assets/plaban-icon-logo.png";
-import heroPhoto from "@/assets/photos/plaban-8657365.jpg.asset.json";
-import detailPhoto from "@/assets/photos/plaban-8657301.jpg.asset.json";
-import ampoulesPhoto from "@/assets/photos/plaban-8666814.jpg.asset.json";
-import interiorPhoto from "@/assets/photos/plaban-36606437.jpg.asset.json";
-import pharmacistPhoto from "@/assets/photos/plaban-14797864.jpg.asset.json";
-import bottlesPhoto from "@/assets/photos/plaban-5682923.jpg.asset.json";
+import heroPhoto from "@/assets/photos/indian-pharmacy-hero.webp.asset.json";
+import detailPhoto from "@/assets/photos/indian-pharmacy-detail.webp.asset.json";
+import shelvesPhoto from "@/assets/photos/medicine-shelves-india.webp.asset.json";
+import storePhoto from "@/assets/photos/indian-medical-store.webp.asset.json";
+import tabletsPhoto from "@/assets/photos/tablets-india.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
       { title: "PLABAN MEDICAL HALL" },
-      { name: "description", content: "Plaban Medical Hall in Sorbhog Bazar, Assam. Thoughtful pharmacy care and everyday essentials, with pharmacist Ranit Saha." },
+      { name: "description", content: "Plaban Medical Hall in Sorbhog Bazar, Assam. Prescriptions, home delivery, diagnostics and doctor consultations. Speak with pharmacist Ranit Saha." },
       { property: "og:title", content: "PLABAN MEDICAL HALL" },
-      { property: "og:description", content: "Thoughtful pharmacy care, right here in Sorbhog Bazar, Assam. Get in touch with pharmacist Ranit Saha." },
+      { property: "og:description", content: "Prescriptions, home delivery, diagnostics and doctor consultations in Sorbhog Bazar, Assam. Call Plaban Medical Hall." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -31,22 +30,30 @@ const phone = "8918800371";
 const mapsUrl = "https://www.google.com/maps/search/?api=1&query=Plaban+Medical+Hall+Sorbhog+Bazar+Assam+India";
 const navigation = [
   { label: "Our story", href: "#story", id: "story" },
-  { label: "What we do", href: "#offerings", id: "offerings" },
+  { label: "Services", href: "#offerings", id: "offerings" },
+  { label: "Prescriptions", href: "#prescriptions", id: "prescriptions" },
   { label: "The gallery", href: "#gallery", id: "gallery" },
   { label: "Find us", href: "#visit", id: "visit" },
 ];
 const gallery = [
-  { src: heroPhoto.url, alt: "Pharmacist arranging bottles on the shelves of a traditional pharmacy", caption: "An eye for every detail", shape: "large" },
-  { src: ampoulesPhoto.url, alt: "Glass ampoules carefully arranged on a wooden shelf", caption: "Care in the details", shape: "tall" },
-  { src: detailPhoto.url, alt: "A pharmacist selecting a bottle from a pharmacy shelf", caption: "A considered approach", shape: "wide" },
-  { src: interiorPhoto.url, alt: "Shelves and wooden cabinetry inside a vintage apothecary", caption: "Spaces that feel personal", shape: "tall" },
-  { src: bottlesPhoto.url, alt: "Small glass medicine bottles arranged on a table", caption: "The everyday essentials", shape: "wide" },
-  { src: pharmacistPhoto.url, alt: "Pharmacist working at a counter in front of stocked pharmacy shelves", caption: "People before everything", shape: "wide" },
+  { src: heroPhoto.url, alt: "A working pharmacy in Varanasi, India", caption: "The people behind the counter", shape: "large" },
+  { src: tabletsPhoto.url, alt: "Medicine tablets in a blister pack photographed in Howrah, India", caption: "The medicine you need", shape: "tall" },
+  { src: shelvesPhoto.url, alt: "Glass medicine bottles on pharmacy shelves in Varanasi, India", caption: "Care in the details", shape: "wide" },
+  { src: storePhoto.url, alt: "A neighborhood medical store in Gangtok, India", caption: "A neighborhood essential", shape: "tall" },
+  { src: detailPhoto.url, alt: "Pharmacist looking through medicine shelves in Varanasi, India", caption: "A considered approach", shape: "wide" },
 ];
 const services = [
-  { number: "01", title: "Prescription care", copy: "Bring in your prescription. We’ll help you understand the next step and find what you need." },
-  { number: "02", title: "Everyday essentials", copy: "The practical health and wellness essentials you reach for in everyday life." },
-  { number: "03", title: "A real conversation", copy: "Questions welcome. Speak with a pharmacist who takes the time to listen." },
+  { number: "01", title: "Prescription care", copy: "Bring your prescription to the pharmacy. We’ll help you find your prescribed medicines and understand what comes next." },
+  { number: "02", title: "Home delivery", copy: "Need medicines brought to your door? Call us to confirm availability, delivery area and timing." },
+  { number: "03", title: "Diagnostics", copy: "Ask us about available diagnostic tests and how to arrange them." },
+  { number: "04", title: "Doctor consultations", copy: "MD physician, diabetes specialist and urologist consultations. Call to check availability and appointments." },
+  { number: "05", title: "Everyday essentials", copy: "The practical health and wellness essentials you reach for in everyday life." },
+];
+const milestones = [
+  { value: 5, label: "Ways we care" },
+  { value: 3, label: "Doctor specialties" },
+  { value: 1, label: "Pharmacist to speak with" },
+  { value: 1, label: "Home in Sorbhog" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -63,21 +70,38 @@ function Count({ value }: { value: number }) {
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+    let frame = 0;
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry?.isIntersecting) return;
       const start = performance.now();
       const tick = (now: number) => {
         const progress = Math.min((now - start) / 1100, 1);
         setCount(Math.round(value * (1 - Math.pow(1 - progress, 3))));
-        if (progress < 1) requestAnimationFrame(tick);
+        if (progress < 1) frame = requestAnimationFrame(tick);
       };
-      requestAnimationFrame(tick);
+      frame = requestAnimationFrame(tick);
       observer.disconnect();
     }, { threshold: 0.5 });
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
   }, [value]);
   return <span ref={ref}>{String(count).padStart(2, "0")}</span>;
+}
+
+function LoaderCount() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / 1050, 1);
+      setProgress(Math.round(100 * (1 - Math.pow(1 - t, 2))));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  return <span className="font-display text-5xl tabular-nums text-primary" aria-label={`Loading ${progress} percent`}>{String(progress).padStart(2, "0")}<span className="text-2xl">%</span></span>;
 }
 
 function Index() {
@@ -126,7 +150,8 @@ function Index() {
       <AnimatePresence>
         {loading && <motion.div key="preloader" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.55 } }} className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background" aria-label="Loading PLABAN MEDICAL HALL">
           <motion.img src={primaryLogo} alt="PLABAN MEDICAL HALL" width={934} height={309} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="w-56 sm:w-72" />
-          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, ease }} className="mt-10 h-px w-32 origin-left bg-primary" />
+          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, ease }} className="mt-8 mb-5 h-px w-32 origin-left bg-primary" />
+          {!reducedMotion && <LoaderCount />}
         </motion.div>}
       </AnimatePresence>
 
@@ -148,7 +173,7 @@ function Index() {
 
       <main>
         <section id="top" ref={heroRef} className="relative flex min-h-[570px] h-[88svh] max-h-[940px] items-end overflow-hidden bg-dark-panel text-hero-foreground">
-          <motion.img src={heroPhoto.url} alt="A pharmacist thoughtfully arranging bottles in a traditional pharmacy" width={1600} height={1067} className="absolute inset-0 h-[115%] w-full object-cover object-[50%_48%]" style={reducedMotion ? {} : { y: heroY }} initial={{ scale: 1.12, opacity: 0.4 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.9, ease }} />
+          <motion.img src={heroPhoto.url} alt="Pharmacists at work in an Indian pharmacy in Varanasi" width={1280} height={853} fetchPriority="high" className="absolute inset-0 h-[115%] w-full object-cover object-[50%_48%]" style={reducedMotion ? {} : { y: heroY }} initial={{ scale: 1.12, opacity: 0.4 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.9, ease }} />
           <div className="hero-mask absolute inset-0" />
           <motion.div className="pointer-events-none absolute right-[8%] top-[22%] hidden h-28 w-28 rounded-full border border-line-light lg:block" animate={reducedMotion ? {} : { y: [-8, 8, -8], rotate: [0, 8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} />
           <motion.div className="pointer-events-none absolute right-[15%] top-[32%] hidden h-1.5 w-1.5 rounded-full bg-hero-foreground lg:block" animate={reducedMotion ? {} : { y: [0, 20, 0] }} transition={{ duration: 5, repeat: Infinity }} />
@@ -157,25 +182,25 @@ function Index() {
               <motion.div variants={fadeUp} className="mb-7 flex items-center gap-4"><span className="h-px w-9 bg-hero-foreground" /><span className="editorial-label">A pharmacy with a personal point of view</span></motion.div>
               <motion.h1 variants={fadeUp} className="editorial-title max-w-[1040px] text-[clamp(4rem,9vw,9.4rem)] leading-[.96]">Plaban <span className="block italic">Medical Hall.</span></motion.h1>
               <motion.div variants={fadeUp} className="mt-8 flex max-w-2xl flex-col gap-7 md:mt-9 md:flex-row md:items-end md:gap-12">
-                <p className="max-w-[440px] text-base leading-relaxed text-hero-foreground/85 md:text-lg">Thoughtful care, familiar faces, and the things you need to feel your best. Right here in Sorbhog.</p>
-                <Button variant="brandLight" size="brand" asChild className="w-fit shrink-0"><a href="#story">Discover our story <span aria-hidden="true">↗</span></a></Button>
+                <p className="max-w-[440px] text-base leading-relaxed text-hero-foreground/85 md:text-lg">Prescriptions, delivery, diagnostics and specialist care. Here for your everyday health needs in Sorbhog.</p>
+                <Button variant="brandLight" size="brand" asChild className="w-fit shrink-0"><a href="#offerings">Explore our services <span aria-hidden="true">↗</span></a></Button>
               </motion.div>
             </motion.div>
             <div className="mt-16 flex items-end justify-between border-t border-line-light pt-5 md:mt-20"><span className="editorial-label text-hero-foreground/75">Sorbhog Bazar · Assam, India</span><a href="#story" className="editorial-label hidden items-center gap-3 md:flex">Scroll to explore <span aria-hidden="true" className="text-lg">↓</span></a><span className="editorial-label text-hero-foreground/75 md:hidden">Est. in Sorbhog</span></div>
           </div>
         </section>
 
+        <section className="bg-paper py-10 md:py-14" aria-label="Plaban at a glance"><div className="site-container grid grid-cols-2 gap-y-8 border-y border-border py-8 md:grid-cols-4 md:gap-y-0 md:py-12">{milestones.map((item, index) => <Reveal key={item.label} className={`min-w-0 px-3 sm:px-5 md:px-8 ${index === 0 ? "pl-0 md:pl-0" : ""} ${index === 3 ? "md:pr-0" : ""} ${index > 0 ? "md:border-l md:border-border" : ""}`}><p className="font-display text-5xl text-primary tabular-nums sm:text-6xl"><Count value={item.value} /></p><p className="mt-3 text-xs leading-snug text-ink-soft sm:text-sm">{item.label}</p></Reveal>)}</div></section>
+
         <section id="story" ref={storyRef} className="overflow-hidden bg-background py-24 md:py-36 lg:py-44">
           <div className="site-container grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-2"><Reveal><p className="editorial-label flex items-center gap-3 text-olive"><span className="inline-block h-px w-7 bg-olive" />01 / Our story</p></Reveal></div>
             <div className="lg:col-span-7 lg:col-start-4"><Reveal><h2 className="editorial-title text-[clamp(2.8rem,5.2vw,5.8rem)]">Good care begins <span className="italic text-olive">with being there.</span></h2></Reveal></div>
             <div className="lg:col-span-3 lg:col-start-4"><Reveal className="max-w-sm"><p className="mt-2 text-base leading-[1.9] text-ink-soft">At Plaban Medical Hall, pharmacy is more than a transaction. It’s a conversation, a little reassurance, and the comfort of seeing someone you know.</p><p className="mt-6 text-base leading-[1.9] text-ink-soft">A neighborhood place for your everyday health needs, grounded in Sorbhog Bazar.</p></Reveal></div>
-            <div className="relative lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:-mt-1"><Reveal><div className="relative aspect-[1.12] overflow-hidden rounded-[4px] bg-muted"><motion.img src={detailPhoto.url} alt="Pharmacist examining a medicine bottle on a shelf" width={1600} height={1067} loading="lazy" className="absolute inset-0 h-[115%] w-full object-cover object-[50%_45%]" style={reducedMotion ? {} : { y: storyY }} /></div><div className="mt-4 md:mt-0 md:absolute md:-bottom-7 md:-left-7 bg-paper px-7 py-5 shadow-brand"><p className="editorial-label text-muted-foreground">Your pharmacist</p><p className="mt-1 font-display text-2xl">Ranit Saha</p><p className="text-sm text-ink-soft">Here in Sorbhog Bazar</p></div></Reveal></div>
+            <div className="relative lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:-mt-1"><Reveal><div className="relative aspect-[1.12] overflow-hidden rounded-[4px] bg-muted"><motion.img src={detailPhoto.url} alt="A pharmacist viewing medicine shelves in Varanasi, India" width={1279} height={852} loading="lazy" className="absolute inset-0 h-[115%] w-full object-cover object-[50%_45%]" style={reducedMotion ? {} : { y: storyY }} /></div><div className="mt-4 md:mt-0 md:absolute md:-bottom-7 md:-left-7 bg-paper px-7 py-5 shadow-brand"><p className="editorial-label text-muted-foreground">Your pharmacist</p><p className="mt-1 font-display text-2xl">Ranit Saha</p><p className="text-sm text-ink-soft">Here in Sorbhog Bazar</p></div></Reveal></div>
             <Reveal className="lg:col-span-3 lg:col-start-4 lg:self-end"><div className="flex items-center gap-5 border-t border-border pt-7"><img src={iconLogo} alt="" width={255} height={295} loading="lazy" className="h-12 w-12 object-contain" /><p className="text-sm leading-relaxed text-ink-soft">Independent in spirit.<br />Personal by nature.</p></div></Reveal>
           </div>
         </section>
-
-        <section className="bg-paper py-14 md:py-20" aria-label="A closer look"><div className="site-container grid gap-8 border-y border-border py-10 md:grid-cols-3 md:gap-0 md:py-12"><Reveal className="md:border-r md:border-border md:pr-10"><p className="font-display text-5xl text-primary md:text-6xl"><Count value={3} /></p><p className="editorial-label mt-4 text-ink-soft">Ways we care</p></Reveal><Reveal className="md:border-r md:border-border md:px-10"><p className="font-display text-5xl text-primary md:text-6xl"><Count value={1} /></p><p className="editorial-label mt-4 text-ink-soft">Neighborhood to call home</p></Reveal><Reveal className="md:pl-10"><p className="font-display text-4xl italic text-primary md:text-5xl">You first.</p><p className="editorial-label mt-4 text-ink-soft">Always our point of view</p></Reveal></div></section>
 
         <section id="offerings" className="overflow-hidden bg-background py-24 md:py-36 lg:py-40">
           <div className="site-container"><div className="grid gap-8 lg:grid-cols-12 lg:gap-5"><Reveal className="lg:col-span-3"><p className="editorial-label flex items-center gap-3 text-olive"><span className="inline-block h-px w-7 bg-olive" />02 / What we do</p></Reveal><Reveal className="lg:col-span-8"><h2 className="editorial-title max-w-4xl text-[clamp(3rem,5.6vw,6rem)]">Care for the <span className="italic text-olive">everyday.</span></h2><p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">A simple, considered way to look after the people who walk through our doors.</p></Reveal></div><motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="mt-16 grid gap-5 md:mt-24 md:grid-cols-3">{services.map(service => <motion.article variants={fadeUp} key={service.number} className="service-card flex min-h-[330px] flex-col justify-between rounded-[6px] border border-border bg-card p-8 md:min-h-[390px] md:p-10"><span className="font-display text-4xl italic text-olive/75">{service.number}</span><div><h3 className="font-display text-[2rem] leading-tight md:text-[2.3rem]">{service.title}</h3><p className="mt-5 max-w-[320px] text-sm leading-[1.8] text-ink-soft md:text-base">{service.copy}</p></div><div className="flex items-center justify-between border-t border-border pt-5"><span className="editorial-label text-muted-foreground">Plaban Medical Hall</span><span aria-hidden="true" className="text-2xl text-olive">↗</span></div></motion.article>)}</motion.div></div>
