@@ -153,7 +153,7 @@ function Index() {
           <motion.div className="pointer-events-none absolute right-[8%] top-[22%] hidden h-28 w-28 rounded-full border border-line-light lg:block" animate={reducedMotion ? {} : { y: [-8, 8, -8], rotate: [0, 8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} />
           <motion.div className="pointer-events-none absolute right-[15%] top-[32%] hidden h-1.5 w-1.5 rounded-full bg-hero-foreground lg:block" animate={reducedMotion ? {} : { y: [0, 20, 0] }} transition={{ duration: 5, repeat: Infinity }} />
           <div className="site-container relative z-10 flex w-full flex-col justify-end pb-12 pt-32 md:pb-16 lg:pb-20">
-            <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-[980px]">
+            <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-[980px] lg:ml-[4vw]">
               <motion.div variants={fadeUp} className="mb-7 flex items-center gap-4"><span className="h-px w-9 bg-hero-foreground" /><span className="editorial-label">A pharmacy with a personal point of view</span></motion.div>
               <motion.h1 variants={fadeUp} className="editorial-title max-w-[1040px] text-[clamp(4rem,9vw,9.4rem)] leading-[.96]">Plaban <span className="block italic">Medical Hall.</span></motion.h1>
               <motion.div variants={fadeUp} className="mt-8 flex max-w-2xl flex-col gap-7 md:mt-9 md:flex-row md:items-end md:gap-12">
