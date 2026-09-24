@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      diagnostic_requests: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          patient_age: number | null
+          patient_name: string
+          phone: string
+          preferred_date: string
+          preferred_window: string
+          selected_tests: string[]
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_age?: number | null
+          patient_name: string
+          phone: string
+          preferred_date: string
+          preferred_window: string
+          selected_tests: string[]
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_age?: number | null
+          patient_name?: string
+          phone?: string
+          preferred_date?: string
+          preferred_window?: string
+          selected_tests?: string[]
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
