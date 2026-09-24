@@ -1,0 +1,1 @@
+CREATE POLICY "No direct access to patient requests" ON public.diagnostic_requests FOR ALL TO authenticated USING (false) WITH CHECK (false);
